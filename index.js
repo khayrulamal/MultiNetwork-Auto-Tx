@@ -504,6 +504,49 @@ async function handleMonadStaking() {
     }
 }
 
+
+async function claimFaucetForExistingWallets() {
+    try {
+        console.log('\nLoading private keys from pk.txt...');
+        const privateKeys = loadPrivateKeys();
+        
+        if (privateKeys.length === 0) {
+            console.log('No private keys found in pk.txt.');
+            return;
+        }
+
+        console.log(`Found ${privateKeys.length} wallets. Claiming faucet for each...`);
+        
+        const provider = new ethers.JsonRpcProvider(networks.somnia.rpc);
+
+        for (let i = 0; i < privateKeys.length; i++) {
+            const wallet = new ethers.Wallet(privateKeys[i], provider);
+            
+            console.log(`\nWallet ${i + 1}: ${wallet.address}`);
+            console.log('Attempting to claim faucet...');
+            
+            const result = await claimFaucet(wallet.address);
+            
+            if (result.success) {
+                console.log(`Claim successful! TX Hash: ${result.hash}`);
+                console.log(`Amount: ${ethers.formatEther(result.amount)} ${networks.somnia.symbol}`);
+            } else {
+                console.log(`Claim failed: ${result.error}`);
+            }
+            
+            if (i < privateKeys.length - 1) {
+                console.log('\nWaiting 5 seconds before next wallet...');
+                await new Promise(resolve => setTimeout(resolve, 5000));
+            }
+        }
+
+        console.log('\nFaucet claims completed!');
+    } catch (error) {
+        console.error('Error claiming faucet for existing wallets:', error.message);
+    }
+}
+
+
 async function handleNetworkOperations(network) {
     while (true) {
         console.log(`\n=== ${networks[network].name} Operations ===`);
