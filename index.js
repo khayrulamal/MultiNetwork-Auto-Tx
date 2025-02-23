@@ -554,7 +554,6 @@ async function handleNetworkOperations(network) {
     console.log('1. Generate Wallets & Claim Faucet');
     console.log('2. Transfer Tokens');
     console.log('3. Claim Faucet for Existing Wallets'); // New Option
-        }
 
         } else if (network === 'monad') {
             console.log('1. Transfer Tokens');
