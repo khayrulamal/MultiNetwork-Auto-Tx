@@ -551,8 +551,11 @@ async function handleNetworkOperations(network) {
     while (true) {
         console.log(`\n=== ${networks[network].name} Operations ===`);
         if (network === 'somnia') {
-            console.log('1. Generate Wallets & Claim Faucet');
-            console.log('2. Transfer Tokens');
+    console.log('1. Generate Wallets & Claim Faucet');
+    console.log('2. Transfer Tokens');
+    console.log('3. Claim Faucet for Existing Wallets'); // New Option
+        }
+
         } else if (network === 'monad') {
             console.log('1. Transfer Tokens');
             console.log('2. Staking Operations');
