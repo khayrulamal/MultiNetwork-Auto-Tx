@@ -568,18 +568,22 @@ async function handleNetworkOperations(network) {
 
         switch (network) {
             case 'somnia':
-                switch (choice) {
-                    case '1':
-                        await handleFaucetClaims();
-                        break;
-                    case '2':
-                        await handleTokenTransfers('somnia');
-                        break;
-                    case '0':
-                        return;
-                    default:
-                        console.log('Invalid choice!');
-                }
+    switch (choice) {
+        case '1':
+            await handleFaucetClaims();
+            break;
+        case '2':
+            await handleTokenTransfers('somnia');
+            break;
+        case '3': // New case for claiming with wallets in pk.txt
+            await claimFaucetForExistingWallets();
+            break;
+        case '0':
+            return;
+        default:
+            console.log('Invalid choice!');
+    }
+
                 break;
 
             case 'monad':
